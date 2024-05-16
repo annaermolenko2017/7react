@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, selectTodos } from '../store/todoSlice';
+import { addTodoAsync, fetchTodos, selectTodos } from '../store/todoSlice';
 import TodoItem from './TodoItem';
 
 const TodoList = () => {
@@ -8,11 +8,14 @@ const TodoList = () => {
     const todos = useSelector(selectTodos);
     const [inputValue, setInputValue] = useState('');
 
+    useEffect(() => {
+        dispatch(fetchTodos());
+    }, [dispatch]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (inputValue.trim() === '') return;
-        dispatch(addTodo({
-            id: new Date().getTime(),
+        dispatch(addTodoAsync({
             text: inputValue,
             completed: false
         }));
