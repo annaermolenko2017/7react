@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Оновлена URL-адреса API
 const API_URL = 'https://66466a4951e227f23aaedf62.mockapi.io/todos';
 
 export const fetchTodos = createAsyncThunk('todos/fetchTodos', async () => {
