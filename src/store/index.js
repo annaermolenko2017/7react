@@ -1,28 +1,10 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
+import todoReducer from './todoSlice';
 
-const todoSlice = createSlice({
-    name: 'todos',
-    initialState: [],
-    reducers: {
-        addTodo: (state, action) => {
-            state.push(action.payload);
-        },
-        toggleTodo: (state, action) => {
-            const todo = state.find(todo => todo.id === action.payload);
-            if (todo) {
-                todo.completed = !todo.completed;
-            }
-        },
-        deleteTodo: (state, action) => {
-            return state.filter(todo => todo.id !== action.payload);
-        }
-    }
-});
-
-export const { addTodo, toggleTodo, deleteTodo } = todoSlice.actions;
-export const selectTodos = state => state.todos;
-export default configureStore({
+const store = configureStore({
     reducer: {
-        todos: todoSlice.reducer
+        todos: todoReducer
     }
 });
+
+export default store;

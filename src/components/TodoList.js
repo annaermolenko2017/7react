@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, toggleTodo, deleteTodo, selectTodos } from '../store';
+import { addTodo, selectTodos } from '../store/todoSlice';
+import TodoItem from './TodoItem';
 
-function TodoList() {
+const TodoList = () => {
     const dispatch = useDispatch();
     const todos = useSelector(selectTodos);
     const [inputValue, setInputValue] = useState('');
-
-    const handleToggleTodo = (id) => {
-        dispatch(toggleTodo(id));
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,23 +19,12 @@ function TodoList() {
         setInputValue('');
     };
 
-    const handleDeleteTodo = (id) => {
-        dispatch(deleteTodo(id));
-    };
-
     return (
         <div>
             <h1>Todo List</h1>
             <ul>
-                {todos.map((todo) => (
-                    <li
-                        key={todo.id}
-                        onClick={() => handleToggleTodo(todo.id)}
-                        style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
-                    >
-                        {todo.text}
-                        <button onClick={() => handleDeleteTodo(todo.id)}>Delete</button>
-                    </li>
+                {todos.map(todo => (
+                    <TodoItem key={todo.id} todo={todo} />
                 ))}
             </ul>
             <form onSubmit={handleSubmit}>
@@ -52,6 +38,6 @@ function TodoList() {
             </form>
         </div>
     );
-}
+};
 
 export default TodoList;
